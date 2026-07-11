@@ -17,12 +17,12 @@ import java.util.List;
 @AllArgsConstructor
 public class AdminController {
 
-    @Autowired
+     @Autowired
     private  final PatientService patientService;
 
     @GetMapping("/patients")
-    public ResponseEntity<List<Patient>> getAllPatients(){
-        return (ResponseEntity<List<Patient>>) patientService.fetchAllPatient();
+    public List<Patient> getAllPatients(){
+        return patientService.fetchAllPatient();
     }
 
 }
