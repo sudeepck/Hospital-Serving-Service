@@ -19,7 +19,7 @@ public class PatientService {
 
     private final PatientsRepository patientsRepository;
 
-    public  List<Patient> fetchAllPatient(){
+    public List<Patient> fetchAllPatient(){
         return  patientsRepository.findAllpatientsWithAppointents();
     }
 

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/doctor")
+@RequestMapping("/public/doctor")
 public class DoctorController {
 
     @Autowired

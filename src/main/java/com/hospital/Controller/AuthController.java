@@ -1,37 +1,34 @@
 package com.hospital.Controller;
 
-import com.hospital.Entity.Users;
-import com.hospital.Security.AuthService;
+
+import com.hospital.Service.AuthService;
 import com.hospital.dto.LoginRequestDto;
 import com.hospital.dto.LoginresponseDto;
 import com.hospital.dto.SignUpRequestDto;
 import com.hospital.dto.SignUpResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@RestController("")
-@RequestMapping("/auth")
+@RestController
 @RequiredArgsConstructor
+@RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired
-    private AuthService authService;
-
-    @PostMapping("/signup")
-    public ResponseEntity<SignUpResponseDto> signup(@RequestBody SignUpRequestDto user) throws IllegalAccessException {
-        System.out.println("hello");
-        return  ResponseEntity.ok(authService.signup(user));
-    }
+    private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginresponseDto> login(@RequestBody LoginRequestDto user){
-        return  ResponseEntity.ok(authService.verify(user));
+    public ResponseEntity<LoginresponseDto> login(@RequestBody LoginRequestDto loginRequestDto){
+            return ResponseEntity.ok(authService.login(loginRequestDto));
     }
 
-    @PutMapping("/updatePassword")
-    public Users updatePassword(@RequestBody Users user){
-        return authService.updatePassword(user);
+    @PostMapping("/SignUp")
+    public ResponseEntity<SignUpResponseDto> login(@RequestBody SignUpRequestDto signUpRequestDto){
+        return ResponseEntity.ok(authService.signUp(signUpRequestDto));
     }
 }
