@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -19,12 +20,19 @@ import java.io.IOException;
 
 @Component
 @Slf4j
-@RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final UserRepository userRepository;
     private final  AuthUtil authUtil;
-    private  final HandlerExceptionResolver exceptionResolver;
+    private final HandlerExceptionResolver exceptionResolver;
+
+    public JwtAuthFilter(UserRepository userRepository,
+                         AuthUtil authUtil,
+                         @Qualifier("handlerExceptionResolver") HandlerExceptionResolver exceptionResolver) {
+        this.userRepository = userRepository;
+        this.authUtil = authUtil;
+        this.exceptionResolver = exceptionResolver;
+    }
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try{
@@ -51,6 +59,5 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }catch (Exception ex){
             exceptionResolver.resolveException(request,response,null,ex);
         }
-
     }
 }
